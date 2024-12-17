@@ -3,7 +3,7 @@ import nltk
 from nltk.tokenize import * 
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 
-# Αρχικοποίηση της βιβλιοθήκης nltk (λήψη πόρων)
+# initializing the nltk library (downloading resources)
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -12,7 +12,7 @@ nltk.download('omw-1.4')
 stemmer = PorterStemmer()
 lemmatizer = WordNetLemmatizer()
 
-# Λίστα με stop words
+# list with stop words
 stop_words = set(nltk.corpus.stopwords.words('english'))
 
 def stem_process(wiki_texts):
@@ -20,7 +20,7 @@ def stem_process(wiki_texts):
     for key, value in wiki_texts.items():
         content = value["content"]
 
-        # Αφαίρεση ειδικών χαρακτήρων (κρατάμε μόνο αλφαριθμητικούς χαρακτήρες και κενά)
+        # removal of special characters (we keep letters , numbers and gaps/spaces)
         content = re.sub('-',' ',content)
         content = re.sub('[^a-zA-Z0-9\s]', '', content)
         content = re.sub('\n',' ',content)
@@ -32,12 +32,12 @@ def stem_process(wiki_texts):
         # Stemming
         stemmed_words = [stemmer.stem(word.lower()) for word in words]
     
-        if key not in stem_process:
+        if key not in stem_process: # initializing dictionaries per key
             stem_process[key]={}
             
         try:
-        # Ενημέρωση του λεξικού με τα επεξεργασμένα δεδομένα
-            stem_process[key]["tokens"] = words  # Τα tokens χωρίς ειδικούς χαρακτήρες
+        # updating dictionary with processed data
+            stem_process[key]["tokens"] = words 
             stem_process[key]["stemmed_tokens"] = stemmed_words
             stem_process[key]["sentences"] = sentences
         except KeyError:
@@ -50,7 +50,7 @@ def NoStopWords(wiki_texts):
     for key, value in wiki_texts.items():
         content = value["content"]
 
-        # Αφαίρεση ειδικών χαρακτήρων (κρατάμε μόνο αλφαριθμητικούς χαρακτήρες και κενά)
+        # removal of special characters (we keep letters , numbers and gaps/spaces)
         content = re.sub('-',' ',content)
         content = re.sub('[^a-zA-Z0-9\s]', '', content)
         content = re.sub('\n',' ',content)
@@ -60,16 +60,16 @@ def NoStopWords(wiki_texts):
         words = word_tokenize(content)
         sentences = sent_tokenize(content)
 
-        # Αφαίρεση των stop words
+        # removal of stop words
         filtered_words = [word for word in words if word.lower() not in stop_words]
         
-        if key not in smpl_process:
+        if key not in smpl_process: # initializing dictionaries per key
             smpl_process[key]={}
        
         try:
-        # Ενημέρωση του λεξικού με τα επεξεργασμένα δεδομένα
+        # updating dictionary with processed data
             smpl_process[key]["tokens"] = words 
-            smpl_process[key]["No-Stop-Words"] = filtered_words  # Τα tokens χωρίς stop words και ειδικούς χαρακτήρες
+            smpl_process[key]["No-Stop-Words"] = filtered_words  
             smpl_process[key]["sentences"] = sentences
         except KeyError:
             print("couldnt find a match for the key: ",key )
@@ -82,7 +82,7 @@ def lemmatization_process(wiki_texts):
     for key, value in wiki_texts.items():
         content = value["content"]
      
-        # Αφαίρεση ειδικών χαρακτήρων (κρατάμε μόνο αλφαριθμητικούς χαρακτήρες και κενά)
+        # removal of special characters (we keep letters , numbers and gaps/spaces)
         content = re.sub('-',' ',content)
         content = re.sub('\n',' ',content)
         content = re.sub('[^a-zA-Z0-9\s]', '', content)
@@ -96,11 +96,11 @@ def lemmatization_process(wiki_texts):
         # Lemmatization
         lemmatized_words = [lemmatizer.lemmatize(word.lower()) for word in words]
         
-        if key not in lem_process:
+        if key not in lem_process: # initializing dictionaries per key
             lem_process[key]={}
             
         try:    
-        # Ενημέρωση του λεξικού με τα επεξεργασμένα δεδομένα
+        # updating dictionary with processed data
             lem_process[key]["tokens"] = words  # Τα tokens χωρίς ειδικούς χαρακτήρες
             lem_process[key]["lemmatized_tokens"] = lemmatized_words
             lem_process[key]["sentences"] = sentences
