@@ -1,27 +1,23 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Dec 12 18:16:56 2024
 
-@author: Petros
-"""
 
 def create_inverted_index_stemmed(processed_texts):
     """
-    Δημιουργεί αντεστραμμένο ευρετήριο από τα επεξεργασμένα δεδομένα,
-    εξασφαλίζοντας ότι κάθε doc_id εμφανίζεται μόνο μία φορά.
+    creates inverted index from the processed data , 
+    guaranteeing that all do_id's are shown only once
     """
-    inverted_index = {}  # Λεξικό για αποθήκευση του ανεστραμμένου ευρετηρίου
+    inverted_index = {}  #  dictionary for saving the inverted index
 
     for doc_id, data in processed_texts.items():
-        # Παίρνουμε τα stem tokens από τα επεξεργασμένα δεδομένα
+        # take the stem tokens from the processed data
         tokens = data.get("stemmed_tokens", [])
 
         for token in tokens:
             if token not in inverted_index:
-                inverted_index[token] = set()  # Χρησιμοποιούμε σύνολο για μοναδικότητα
-            inverted_index[token].add(doc_id)  # Προσθέτουμε το doc_id στο σύνολο του token
+                inverted_index[token] = set()  # using sum for individuality
+            inverted_index[token].add(doc_id)  # adding doc_id to the sum of token
 
-    # Μετατροπή των συνόλων σε λίστες για αποθήκευση σε JSON
+    # changing the sums into list so that they get saved as JSON
     inverted_index = {token: list(doc_ids) for token, doc_ids in inverted_index.items()}
 
     return inverted_index
