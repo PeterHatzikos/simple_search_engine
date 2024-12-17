@@ -4,7 +4,7 @@ The following is a simple search engine for a set number of random <b>wikipedia<
 
 ## features 
 * <u>Web Crawler :</u>  The program includes a web crawler that fetches the usuable text from the wikipedia articles.
-* <b>Search Algorithms:</b>
+* <u>Search Algorithms:</u>
   * <b>Boolean Search:</b> Supports queries with Boolean operators (AND, OR, NOT) for more refined searches.
   * <b>Vector Space Model:</b> Utilizes TF-IDF (Term Frequency-Inverse Document Frequency) and cosine similarity for searching and ranking.
   * <b>Probabilistic Retrieval:</b> Uses the BM25 algorithm to calculate scores and rank documents.
